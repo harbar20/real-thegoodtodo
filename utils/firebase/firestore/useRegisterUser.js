@@ -1,6 +1,9 @@
 import * as admin from "firebase-admin";
+import {useUser} from '../auth/useUser'
 
 const useRegisterUser = async (userType, email, name, description) => {
+    const {updateProfile} = useUser();
+
     if (!admin.apps.length) {
         admin.initializeApp({
             credential: admin.credential.cert({
@@ -17,6 +20,7 @@ const useRegisterUser = async (userType, email, name, description) => {
 
     const docRef = db.collection(`${userType.toLowerCase()}s`).doc(email);
 
+    updateProfile({displayName: name.replace(" ", "_")})
     await docRef.set({
         email: email,
         name: name,

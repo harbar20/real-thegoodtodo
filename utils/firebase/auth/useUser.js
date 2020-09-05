@@ -57,7 +57,9 @@ const useUser = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return { user, logout };
+    //To change info about the user
+    const updateProfile = user.updateProfile;
+    return { user, logout, updateProfile };
 };
 
 export { useUser };
