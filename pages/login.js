@@ -1,26 +1,36 @@
-import {useRouter} from 'next/router'
-import {useEffect} from 'react'
+import { useRouter } from "next/router";
+import Link from 'next/link'
+import { useEffect } from "react";
 import FirebaseAuth from "../components/FirebaseAuth";
-import {useUser} from '../utils/auth/useUser';
+import { useUser } from "../utils/firebase/auth/useUser";
 
 const Auth = () => {
-	const {user} = useUser();
-	const router = useRouter();
+    const { user } = useUser();
+    const router = useRouter();
 
-	useEffect(() => {
-		if (user) {
-			router.push('/form')
-		}
-	})
-	
-	return (
-		<div>
-			<p>Sign in</p>
-			<div>
-				<FirebaseAuth />
-			</div>
-		</div>
-	);
+    /*
+    useEffect(() => {
+        console.log(user);
+        if (user) {
+            router.push("/form");
+        }
+    });
+    */
+
+    if (!user) {
+        return (
+            <div>
+                <div>
+                    <FirebaseAuth />
+                </div>
+            </div>
+        );
+    }
+    return (
+        <Link href="/form">
+            Fill out this required secondary form.
+        </Link>
+    )
 };
 
 export default Auth;
