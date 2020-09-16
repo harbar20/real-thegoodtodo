@@ -5,13 +5,10 @@ const useDbUser = async (email) => {
     const db = firebase.firestore();
 
     try {
-        const volRef = db.collection("volunteers").doc(email);
-        const volDoc = await volRef.get().catch((e) => console.error(e));
-        const orgRef = db.collection("organizers").doc(email);
-        const orgDoc = await orgRef.get().catch((e) => console.error(e));
+        const ref = db.collection("users").doc(email);
+        const doc = await ref.get().catch((e) => console.error("Error within useDbUser" + e));
 
-        if (volDoc.exists) return volDoc;
-        else if (orgDoc.exists) return orgDoc;
+        if (doc.exists) return volDoc.data();
         return false;
     }
     catch (e) {

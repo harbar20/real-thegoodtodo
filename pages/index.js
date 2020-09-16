@@ -1,9 +1,13 @@
 import Link from "next/link";
 import Layout from "../components/layout";
 import { useUser } from "../utils/firebase/auth/useUser";
+import useDbUser from '../utils/firebase/firestore/useDbUser';
 
 const Index = () => {
     const { user, logout } = useUser();
+    const dbUser = useDbUser(user ? user.displayName : "default").then((response) => {
+        return response;
+    })
     if (!user) {
         return (
             <Layout>
@@ -21,7 +25,7 @@ const Index = () => {
     return (
         <div>
             <div>
-                <p>You're signed in. Email: {user.email}</p>
+                <p>Your email is both {user.email} and {dbUser.email}</p>
                 <p
                     style={{
                         display: "inline-block",

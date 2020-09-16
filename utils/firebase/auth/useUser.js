@@ -29,6 +29,14 @@ const useUser = () => {
             });
     };
 
+    const update = async (obj) => {
+        return firebase.auth().currentUser.updateProfile(obj).then(() => {
+            return;
+        }).catch((e) => {
+            console.error(e);
+        });;
+    }
+
     useEffect(() => {
         // Firebase updates the id token every hour, this
         // makes sure the react state and the cookie are
@@ -58,8 +66,7 @@ const useUser = () => {
     }, []);
 
     //To change info about the user
-    const updateProfile = user ? user.updateProfile : "";
-    return { user, logout, updateProfile };
+    return { user, logout, update };
 };
 
 export { useUser };
